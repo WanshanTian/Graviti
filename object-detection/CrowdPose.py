@@ -45,7 +45,7 @@ for split in splits:
             data.label.box2d = []
             data.label.keypoints2d = []
             for ii in range(len(img_label)):
-                xmin = img_label[ii][0][0]
+                xmin = (img_label[ii][0][0])
                 ymin = img_label[ii][0][1]
                 xmax = img_label[ii][0][2]
                 ymax = img_label[ii][0][3]
