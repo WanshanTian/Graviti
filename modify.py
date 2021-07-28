@@ -7,13 +7,14 @@ from tensorbay.label import LabeledBox2D
 
 # Authorization
 gas = GAS(access_key)
+dataset_name = "SCUT_FBP5500"
 dataset_client = gas.get_dataset(dataset_name)
 # dataset_client= Dataset(dataset_name)
 # Create Draft
-# dataset_client.create_draft("draft-1")
-is_draft = dataset_client.status.is_draft
+dataset_client.create_draft("draft-1")
+# is_draft = dataset_client.status.is_draft
 # is_draft = True (True for draft, False for commit)
-draft_number = dataset_client.status.draft_number
+# draft_number = dataset_client.status.draft_number
 # draft_number = 1
 dataset = Dataset(dataset_name)
 # for k, v in LABEL_FILENAME_DICT.items():

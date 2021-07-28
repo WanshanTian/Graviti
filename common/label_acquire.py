@@ -2,7 +2,7 @@ from xml.dom.minidom import parse
 import xml.dom.minidom
 
 
-def acquire_label_xml(img_path):
+def acquire_label_xml(img_path) -> []:
     DOMTree = xml.dom.minidom.parse(img_path)
     collection = DOMTree.documentElement
     boundingbox = collection.getElementsByTagName("object")

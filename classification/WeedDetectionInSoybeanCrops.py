@@ -10,18 +10,26 @@ root_path = "G:\download_dataset\WeedDetectionInSoybeanCrops\weed-detection-in-s
 config.timeout = 400
 config.max_retries = 10
 
-dataset_name = "WeedDetectionInSoybeanCrops-test"
+dataset_name = "WeedDetectionInSoybeanCrops"
 
 classes = os.listdir(root_path)
 if "catalog.json" in classes:
     classes.remove("catalog.json")
 
-import cv2
-
+initial = INITIAL(root_path, dataset_name, ["CLASSIFICATION"], classes)
+gas, dataset = initial.generate_catalog()
 
 for split in classes:
-    imgName = [x for x in os.listdir(os.path.join(root_path, split)) if x.endswith(".tif")]
+    segment = dataset.create_segment(split)
+    imgName = [x for x in os.listdir(os.path.join(root_path, split)) if x.endswith(".jpg")]
     for img in imgName:
         img_path = os.path.join(root_path, split+"\\"+img)
-        i = cv2.imread(img_path)
-        cv2.imwrite(os.path.join(root_path, split+"\\"+img.split(".")[0]+".jpg"), i)
+        data = Data(img_path)
+        data.label.classification = Classification(split)
+        segment.append(data)
+dataset_client = gas.upload_dataset(dataset, jobs=12)
+dataset_client.commit("Initial commit")
+
+
+
+
