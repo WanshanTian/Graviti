@@ -1,4 +1,4 @@
-from common.dataset_initial import INITIAL
+from common.dataset_initial import INITIAL, update_catalog
 from tensorbay.label import LabeledBox2D, Classification, LabeledKeypoints2D
 from tensorbay.dataset import Data
 from tensorbay.geometry import Keypoint2D
@@ -13,20 +13,31 @@ from tensorbay import GAS
 from category import catalog
 from config import access_key
 from tensorbay.dataset import Dataset
-config.timeout = 400
-config.max_retries = 10
+
+# config.timeout = 400
+# config.max_retries = 10
 gas = GAS(access_key)
-dataset_name = "SCUT_FBP5500"
-root_path = "G:\download_dataset\SCUT_FBP5500\SCUT-FBP5500_v2.1\SCUT-FBP5500_v2"
-imgName = os.listdir(os.path.join(root_path, "Images"))
-dataset = Dataset(dataset_name)
+# dataset_name = "MSRA10K-test"
+
+root_path = "G:\download_dataset\DatasetForInfraredImageDimSmallAircraftTargetDetectionAndTrackingUnderGroundAirBackground"
+dataset_name = "DatasetForInfraredImageDimSmallAircraftTargetDetectionAndTrackingUnderGroundAirBackground"
 dataset_client = gas.get_dataset(dataset_name)
-draft_number = dataset_client.create_draft("draft-" + str(datetime.datetime.now()))
+for i in list(range(1, 23)):
 
-# dataset_client.delete_segment("train&test")
-segment_client = dataset_client.get_segment("train&test")
-segment_client.delete_data(imgName)
+    draft_number = dataset_client.create_draft("draft-" + str(datetime.datetime.now()))
+    dataset_client.delete_segment("data"+str(i))
+    dataset_client.commit("commit-" + str(datetime.datetime.now()), "commit description")
+
+# root_path = "G:\download_dataset\DatasetForInfraredImageDimSmallAircraftTargetDetectionAndTrackingUnderGroundAirBackground"
+# dataset_name = "TrackingUnderGroundAirBackground"
+# imgName = os.listdir(os.path.join(root_path, "Images"))
+# dataset = Dataset(dataset_name)
+# segment_client = dataset_client.get_segment("train&test")
+# segment_client.delete_data(imgName)
 
 
-dataset_client.commit("commit-"+str(datetime.datetime.now()), "commit description")
-
+# root_path = "G:\download_dataset\VOC2012PersonLayout\VOCtrainval_11-May-2012\VOCdevkit\VOC2012"
+# dataset_name = "VOC2012PersonLayout"
+# classes = ['person', 'aeroplane', 'tvmonitor', 'train', 'boat', 'dog', 'chair', 'bird', 'bicycle', 'bottle', 'sheep',
+#            'diningtable', 'horse', 'motorbike', 'sofa', 'cow', 'car', 'cat', 'bus', 'pottedplant']
+# update_catalog(root_path, dataset_name , ["BOX2D"], classes)

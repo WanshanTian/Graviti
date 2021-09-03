@@ -16,7 +16,7 @@ config.max_retries = 4
 dataset_name = "DeepPCB"
 root_path = "G:\\download_dataset\\DeepPCB\\DeepPCB\\DeepPCB-master\\PCBData"
 
-initial = INITIAL(root_path, dataset_name, ["CLASSIFICATION", "BOX2D"],
+initial = INITIAL(root_path, dataset_name, ["BOX2D"],
                   ["open", "short", "mousebite", "spur", "pin hole", "spurious copper"])
 gas, dataset = initial.generate_catalog()
 

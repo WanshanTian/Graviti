@@ -28,7 +28,6 @@ for img in imgsName:
     data = Data(img_path)
     if len(img_label) != 0:
         data.label.box2d = []
-        data.label.keypoints2d = []
         for ii in range(len(img_label)):
             xmin = img_label[ii][0]
             ymin = img_label[ii][1]

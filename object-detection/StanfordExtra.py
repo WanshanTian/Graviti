@@ -42,10 +42,11 @@ for split in os.listdir(os.path.join(root_path, "images")):
     for imgName in imgsNames:
         img_path = os.path.join(os.path.join(root_path, "images" + "\\" + split), imgName)
         data = Data(img_path)
-        data.label.keypoints2d = []
 
-        keypoints = LabeledKeypoints2D()
-        try:
+        if imgName in img_labels.keys():
+
+            data.label.keypoints2d = []
+            keypoints = LabeledKeypoints2D()
             for keypoint in range(len(img_labels[imgName][1])):
                 x, y, v = img_labels[imgName][1][keypoint][0], img_labels[imgName][1][keypoint][1], int(
                     img_labels[imgName][1][keypoint][2])
@@ -53,7 +54,7 @@ for split in os.listdir(os.path.join(root_path, "images")):
                     keypoints.append(
                         Keypoint2D(x, y, v))
             data.label.keypoints2d.append(keypoints)
-            # 分类
+        # 分类
             data.label.classification = Classification(img_labels[imgName][2])
             # bbox
             data.label.box2d = []
@@ -64,7 +65,7 @@ for split in os.listdir(os.path.join(root_path, "images")):
             data.label.box2d.append(LabeledBox2D(xmin, ymin, xmax, ymax,
                                                  category=img_labels[imgName][2]))
             segment.append(data)
-        except:
+        else:
             segment.append(data)
 dataset_client = gas.upload_dataset(dataset, jobs=12)
 dataset_client.commit("Initial commit")
