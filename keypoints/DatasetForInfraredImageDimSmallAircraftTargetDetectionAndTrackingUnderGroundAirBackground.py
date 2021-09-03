@@ -57,7 +57,6 @@ for split in classes:
             # keypoints = LabeledKeypoints2D(category="object"+str(point+1))
             keypoints = LabeledKeypoints2D(category="object")
             x = label[point * 2]
-            y = label[point * 2 + 1]
             keypoints.append(Keypoint2D(x, y))
             data.label.keypoints2d.append(keypoints)
         segment.append(data)
