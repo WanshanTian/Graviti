@@ -57,10 +57,17 @@ def catalog(tp: list, path: str, args: list, keypoints=None):
     #     ]
     # }
     for i in tp:
-        if i == "BOX2D" or i == "CLASSIFICATION" or i == "KEYPOINTS2D":
+        if i == "BOX2D" or i == "CLASSIFICATION" or i == "KEYPOINTS2D" or i == "INSTANCE_MASK" or i == "SEMANTIC_MASK":
             category[i] = {"categories": []}
+            index = 1
             for j in range(len(args)):
-                category[i].get("categories").append({"name": args[j]})
+                if i == "INSTANCE_MASK" or i == "SEMANTIC_MASK":
+                    category[i].get("categories").append({"name": args[j], "categoryId": index})
+                    index += 1
+                else:
+                    category[i].get("categories").append({"name": args[j]})
+        if i == "INSTANCE_MASK" or i == "SEMANTIC_MASK":
+            category[i].get("categories").append({"name": "background", "categoryId": 0})
         if i == "BOX2D":
             category[i]["attributes"] = [{"name": "occluded", "type": "boolean", "crowdIndex": "occluded"}]
         if i == "KEYPOINTS2D":

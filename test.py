@@ -12,10 +12,7 @@ from config import access_key
 import cv2
 from xml.dom.minidom import parse
 import xml.dom.minidom
-
-print("%03d" % 2)
-
-a = "test" +"%02d" % (4+1)
-print(a)
-
-print("data01".split("data"))
+a=1
+b="2"
+print(f"{a}_{b.zfill(8)}")
+print("1".zfill(4))

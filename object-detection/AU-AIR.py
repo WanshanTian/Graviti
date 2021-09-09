@@ -25,7 +25,7 @@ with open(label_path, encoding='utf-8') as f:
     all = json.loads(line)
 classes = all.get("categories")
 splits = {}
-for i,j in zip(range(8), classes):
+for i, j in zip(range(8), classes):
     splits[i] = j
 # print(json.dumps(all, sort_keys=True, indent=4, separators=(', ', ': ')))
 labels = {}
