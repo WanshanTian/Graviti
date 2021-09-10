@@ -40,28 +40,28 @@ from PIL import Image
 import numpy as np
 
 #
-# root_path = "D:\\download_dataset\\FSS1000\\fewshot_data"
-# classes = sorted(os.listdir(os.path.join(root_path, "fewshot_data")))
-# pixel = 1
-# for split in classes:
-#     imgsName = [x for x in os.listdir(os.path.join(root_path, "fewshot_data\\" + split)) if x.endswith(".png")]
-#     print("%s is now transfering , the %d" % (split, pixel))
-#     for imgName in imgsName:
-#         img_path = os.path.join(root_path, "fewshot_data\\" + split + "\\" + imgName)
-#         # img = cv2.imread(img_path, 0).astype("uint16")
-#         img=Image.open(img_path,)
-#         for i in range(img.shape[0]):
-#             for j in range(img.shape[1]):
-#                 if img[i, j] != 0:
-#                     img[i, j] = pixel
-#         img.astype("uint16")
-#         png = Image.fromarray(img, mode="I;16")
-#         png.save(os.path.join(root_path, "fewshot_data\\" + split + "\\" + imgName.split(".")[0] + "mask.png"))
-#         # cv2.imwrite(os.path.join(root_path, "fewshot_data\\" + split + "\\" + imgName.split(".")[0] + "mask.png"), img)
-#         # plt.imsave(os.path.join(root_path, "fewshot_data\\" + split + "\\" + imgName.split(".")[0] + "mask.png"), img,
-#                    # cmap="gray")
-#     pixel += 1
-#
+root_path = "G:\\download_dataset\\FSS1000\\fewshot_data"
+classes = sorted(os.listdir(os.path.join(root_path, "fewshot_data")))
+pixel = 1
+for split in classes:
+    imgsName = [x for x in os.listdir(os.path.join(root_path, "fewshot_data\\" + split)) if x.endswith(".png")]
+    print("%s is now transfering , the %d" % (split, pixel))
+    for imgName in imgsName:
+        img_path = os.path.join(root_path, "fewshot_data\\" + split + "\\" + imgName)
+        img = cv2.imread(img_path, 0).astype("uint16")
+        # img=Image.open(img_path,)
+        for i in range(img.shape[0]):
+            for j in range(img.shape[1]):
+                if img[i, j] != 0:
+                    img[i, j] = pixel
+        # img.astype("uint16")
+        png = Image.fromarray(img, mode="I;16")
+        png.save(os.path.join(root_path, "fewshot_data\\" + split + "\\" + imgName.split(".")[0] + "mask.png"))
+        # cv2.imwrite(os.path.join(root_path, "fewshot_data\\" + split + "\\" + imgName.split(".")[0] + "mask.png"), img)
+        # plt.imsave(os.path.join(root_path, "fewshot_data\\" + split + "\\" + imgName.split(".")[0] + "mask.png"), img,
+                   # cmap="gray")
+    pixel += 1
+
 # #
 
 # img = Image.open("D:\download_dataset\FSS1000\\fewshot_data\\fewshot_data\\ab_wheel\\1.png")

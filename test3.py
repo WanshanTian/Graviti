@@ -16,17 +16,24 @@ from tensorbay.dataset import Dataset
 
 # # config.timeout = 400
 # # config.max_retries = 10
-# gas = GAS(access_key)
+gas = GAS(access_key)
 # # dataset_name = "MSRA10K-test"
 #
 # root_path = "G:\download_dataset\DatasetForInfraredImageDimSmallAircraftTargetDetectionAndTrackingUnderGroundAirBackground"
-# dataset_name = "DatasetForInfraredImageDimSmallAircraftTargetDetectionAndTrackingUnderGroundAirBackground"
-# dataset_client = gas.get_dataset(dataset_name)
-# for i in list(range(1, 23)):
-#
-#     draft_number = dataset_client.create_draft("draft-" + str(datetime.datetime.now()))
-#     dataset_client.delete_segment("data"+str(i))
-#     dataset_client.commit("commit-" + str(datetime.datetime.now()), "commit description")
+dataset_name = "FSS1000"
+root_path = "G:\\download_dataset\\FSS1000\\fewshot_data"
+
+classes = sorted(os.listdir(os.path.join(root_path, "fewshot_data")))
+
+dataset_client = gas.get_dataset(dataset_name)
+index=1
+draft_number = dataset_client.create_draft("draft-" + str(datetime.datetime.now()))
+for segment_name in dataset_client.list_segment_names():
+
+    dataset_client.delete_segment(segment_name)
+    print(index)
+    index+=1
+dataset_client.commit("commit-" + str(datetime.datetime.now()), "commit description")
 
 # root_path = "G:\download_dataset\DatasetForInfraredImageDimSmallAircraftTargetDetectionAndTrackingUnderGroundAirBackground"
 # dataset_name = "TrackingUnderGroundAirBackground"
@@ -34,7 +41,7 @@ from tensorbay.dataset import Dataset
 # dataset = Dataset(dataset_name)
 # segment_client = dataset_client.get_segment("train&test")
 # segment_client.delete_data(imgName)
-
+#
 
 # root_path = "G:\download_dataset\VOC2012PersonLayout\VOCtrainval_11-May-2012\VOCdevkit\VOC2012"
 # dataset_name = "VOC2012PersonLayout"
@@ -42,21 +49,22 @@ from tensorbay.dataset import Dataset
 #            'diningtable', 'horse', 'motorbike', 'sofa', 'cow', 'car', 'cat', 'bus', 'pottedplant']
 # update_catalog(root_path, dataset_name , ["BOX2D"], classes)
 
+# 修改图像名称
 
-gas = GAS(access_key)
-dataset_client = gas.get_dataset("FurgFire")
-
-dataset_client.create_draft("draft-" + str(datetime.datetime.now()))
-
-for segment_name in dataset_client.list_segment_names():
-    segment_client = dataset_client.get_segment(segment_name)
-    data_remote_paths = list(segment_client.list_data_paths())
-    new_paths = []
-    for path in data_remote_paths:
-        new_path, num = path.rsplit("_", 1)
-        print(new_path, num)
-        new_paths.append(f"{new_path}_{num.zfill(9)}")
-
-    segment_client.move_data(data_remote_paths, new_paths)
-
-dataset_client.commit("change remote path")
+# gas = GAS(access_key)
+# dataset_client = gas.get_dataset("FurgFire")
+#
+# dataset_client.create_draft("draft-" + str(datetime.datetime.now()))
+#
+# for segment_name in dataset_client.list_segment_names():
+#     segment_client = dataset_client.get_segment(segment_name)
+#     data_remote_paths = list(segment_client.list_data_paths())
+#     new_paths = []
+#     for path in data_remote_paths:
+#         new_path, num = path.rsplit("_", 1)
+#         print(new_path, num)
+#         new_paths.append(f"{new_path}_{num.zfill(9)}")
+#
+#     segment_client.move_data(data_remote_paths, new_paths)
+#
+# dataset_client.commit("change remote path")

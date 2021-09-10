@@ -1,20 +1,16 @@
-from common.dataset_initial import INITIAL
-from tensorbay.label import LabeledBox2D, Classification, LabeledKeypoints2D, SemanticMask, InstanceMask
-from tensorbay.dataset import Data, Dataset
-from tensorbay.geometry import Keypoint2D
-from common.label_acquire import acquire_label_xml
 import os
+
 from tensorbay.client import config
-from common.file_read import read_csv_file
-import json
-from tensorbay import GAS
-from config import access_key
+from tensorbay.dataset import Data
+from tensorbay.label import Classification, SemanticMask
+
+from common.dataset_initial import INITIAL
 
 config.timeout = 40
 config.max_retries = 4
 
 dataset_name = "FSS1000"
-root_path = "D:\\download_dataset\\FSS1000\\fewshot_data"
+root_path = "G:\\download_dataset\\FSS1000\\fewshot_data"
 
 classes = sorted(os.listdir(os.path.join(root_path, "fewshot_data")))
 
