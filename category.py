@@ -62,7 +62,7 @@ def catalog(tp: list, path: str, args: list, keypoints=None):
             index = 1
             for j in range(len(args)):
                 if i == "INSTANCE_MASK" or i == "SEMANTIC_MASK":
-                    category[i].get("categories").append({"name": args[j], "categoryId": index})
+                    # category[i].get("categories").append({"name": args[j], "categoryId": index})
                     index += 1
                 else:
                     category[i].get("categories").append({"name": args[j]})

@@ -1,5 +1,5 @@
 from common.dataset_initial import INITIAL
-from tensorbay.label import LabeledBox2D, Classification, LabeledKeypoints2D
+from tensorbay.label import LabeledBox2D, Classification, LabeledKeypoints2D, SemanticMask
 from tensorbay.dataset import Data, Dataset
 from tensorbay.geometry import Keypoint2D
 from common.label_acquire import acquire_label_xml
@@ -14,16 +14,16 @@ config.timeout = 40
 config.max_retries = 4
 
 dataset_name = "PennFudanDatabaseForPedestrianDetectionAndSegmentation"
-root_path = "G:\download_dataset\PennFudanDatabaseForPedestrianDetectionAndSegmentation\PennFudanPed"
+root_path = "D:\download_dataset\PennFudanDatabaseForPedestrianDetectionAndSegmentation\PennFudanPed"
 
 imgsName = os.listdir(os.path.join(root_path, "PNGImages"))
 
-initial = INITIAL(root_path, dataset_name, ["BOX2D"], ["Person"])
+initial = INITIAL(root_path, dataset_name, ["BOX2D", "SEMANTIC_MASK"], ["Person"])
 gas, dataset = initial.generate_catalog()
 
 segment = dataset.create_segment("train&test")
 for img in imgsName:
-    img_path = os.path.join(root_path, "PNGImages\\"+img)
+    img_path = os.path.join(root_path, "PNGImages\\" + img)
     label_path = os.path.join(root_path, "Annotation\\" + img.split(".")[0] + ".txt")
     labels_origin = []
     with open(label_path, "r") as f:
@@ -58,7 +58,10 @@ for img in imgsName:
                                                  category="Person",
                                                  # attributes={"occluded": box["occluded"]}))
                                                  ))
+    mask_path = os.path.join(
+        "D:\download_dataset\PennFudanDatabaseForPedestrianDetectionAndSegmentation\PennFudanPed\PedMasks",
+        img.split(".")[0] +"_mask.png")
+    data.label.semantic_mask = SemanticMask(mask_path)
     segment.append(data)
 dataset_client = gas.upload_dataset(dataset, jobs=12)
 dataset_client.commit("Initial commit")
-

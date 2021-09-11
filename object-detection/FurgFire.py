@@ -16,7 +16,7 @@ import xml.dom.minidom
 config.timeout = 40
 config.max_retries = 4
 
-root_path = "G:\download_dataset\FurgFire\\furg-fire-dataset-master"
+root_path = "D:\download_dataset\FurgFire\\furg-fire-dataset-master"
 dataset_name = "FurgFire"
 # videos = [x for x in os.listdir(root_path) if x.endswith(".mp4")]
 #
@@ -76,7 +76,8 @@ for split in splits:
             img_lable.append(l)
     for img in imgsName:
         img_path = os.path.join(root_path, split + "\\" + img)
-        data = Data(img_path)
+        new_path, num = img.rsplit("_", 1)
+        data = Data(img_path, target_remote_path=f"{new_path}_{num.zfill(9)}")
         index = int(img.split(".")[0].split("_")[-1])
         label = img_lable[index]
         if len(label) != 0:
@@ -87,7 +88,7 @@ for split in splits:
                 xmax = float(label[ii][2])
                 ymax = float(label[ii][3])
                 data.label.box2d.append(LabeledBox2D(xmin, ymin, xmin + xmax, ymin + ymax,
-                                                     category=split,
+                                                     category="FIRE",
                                                      # attributes={"occluded": box["occluded"]}))
                                                      ))
         segment.append(data)

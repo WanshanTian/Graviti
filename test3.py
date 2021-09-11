@@ -20,19 +20,20 @@ gas = GAS(access_key)
 # # dataset_name = "MSRA10K-test"
 #
 # root_path = "G:\download_dataset\DatasetForInfraredImageDimSmallAircraftTargetDetectionAndTrackingUnderGroundAirBackground"
-dataset_name = "FSS1000"
-root_path = "G:\\download_dataset\\FSS1000\\fewshot_data"
-
-classes = sorted(os.listdir(os.path.join(root_path, "fewshot_data")))
+root_path = "G:\download_dataset\FurgFire\\furg-fire-dataset-master"
+dataset_name = "FurgFire"
+# classes = sorted(os.listdir(os.path.join(root_path, "fewshot_data")))
 
 dataset_client = gas.get_dataset(dataset_name)
-index=1
-draft_number = dataset_client.create_draft("draft-" + str(datetime.datetime.now()))
-for segment_name in dataset_client.list_segment_names():
 
-    dataset_client.delete_segment(segment_name)
-    print(index)
-    index+=1
+# index=1
+draft_number = dataset_client.create_draft("draft-" + str(datetime.datetime.now()))
+dataset_client.update_notes(is_continuous=True)
+# for segment_name in dataset_client.list_segment_names():
+#
+#     dataset_client.delete_segment(segment_name)
+#     print(index)
+#     index+=1
 dataset_client.commit("commit-" + str(datetime.datetime.now()), "commit description")
 
 # root_path = "G:\download_dataset\DatasetForInfraredImageDimSmallAircraftTargetDetectionAndTrackingUnderGroundAirBackground"
